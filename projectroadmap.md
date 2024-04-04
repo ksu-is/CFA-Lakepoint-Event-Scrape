@@ -1,1 +1,4 @@
-TBD
+- [x] Create README file.
+- [ ] Analyze similar repositories. Pick best match. 
+- [ ] Test repository. 
+- [ ] Fix any problem with repository.
