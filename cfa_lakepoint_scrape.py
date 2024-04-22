@@ -40,41 +40,38 @@ def parse_events(events_scraped):
     
     for event in events_scraped:
         try: 
-        date = event.find('span', class_='event-date').text.strip()
-        time = event.find('span', class_='event-time').text.strip()
-        event_name = event.find('h3', class_='event-title').text.strip()
+            date = event.find('span', class_='event-date').text.strip()
+            time = event.find('span', class_='event-time').text.strip()
+            event_name = event.find('h3', class_='event-title').text.strip()
 
-        start_datetime_str = f'{date} {time.split("-")[0]}'
-        end_datetime_str = f'{date} {time.split("-")[1]}'
+            start_datetime_str = f'{date} {time.split("-")[0]}'
+            end_datetime_str = f'{date} {time.split("-")[1]}'
 
-        start_datetime = datetime.datetime.strptime(start_datetime_str, '%B %d, %Y %I:%M %p')
-        end_datetime = datetime.datetime.strptime(end_datetime_str, '%B %d, %Y %I:%M %p')
+            start_datetime = datetime.datetime.strptime(start_datetime_str, '%B %d, %Y %I:%M %p')
+            end_datetime = datetime.datetime.strptime(end_datetime_str, '%B %d, %Y %I:%M %p')
 
-        e = Event()
-        e.name = event_name
-        e.begin = start_datetime
-        e.end = end_datetime
-        e.description = "Event from {} to {}".format(start_time, end_time)
+            e = Event()
+            e.name = event_name
+            e.begin = start_datetime
+            e.end = end_datetime
 
             cal.events.add(e)
 
             # Add to list formatted for Google Calendar API
             cal_list.append({
-                'summary': 'Work Shift',
-                'description': f"Shift from {start_time} to {end_time}",
+                'summary': event_name,,
                 'start': {
-                    'dateTime': f'{start_datetime.isoformat()}-08:00',
-                    'timeZone': 'America/Vancouver',
+                    'dateTime': start_datetime.isoformat(),
+                    'timeZone': 'America/New_York',
                 },
                 'end': {
-                    'dateTime': f'{end_datetime.isoformat()}-08:00',
-                    'timeZone': 'America/Vancouver',
+                    'dateTime': end_datetime.isoformat(),
+                    'timeZone': 'America/New_York',
                 },
             })
-
-    # Write the calendar to an .ics file
-    with open('shifts.ics', 'w') as f:
-        f.writelines(cal)
+        except Exception as e:
+            print('Error occurred during parsing event:', e)
+    
     return cal_list
 
 
