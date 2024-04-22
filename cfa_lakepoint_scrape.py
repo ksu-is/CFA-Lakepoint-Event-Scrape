@@ -38,25 +38,23 @@ def parse_events(events_scraped):
     # Initialize empty list for google calendar API
     cal_list = []
     
-    for tag in shifts_scraped:
-        data = [td.get_text(strip=True) for td in tag.find_all('td')]
+    for event in events_scraped:
+        try: 
+        date = event.find('span', class_='event-date').text.strip()
+        time = event.find('span', class_='event-time').text.strip()
+        event_name = event.find('h3', class_='event-title').text.strip()
 
-        # Formatting data into ICS format
-        if len(data) >= 7:
-            date = data[0]
-            start_time = data[5]
-            end_time = data[6]
+        start_datetime_str = f'{date} {time.split("-")[0]}'
+        end_datetime_str = f'{date} {time.split("-")[1]}'
 
-            start_datetime_str = date + ' ' + start_time
-            end_datetime_str = date + ' ' + end_time
-            start_datetime = datetime.datetime.strptime(start_datetime_str, '%m/%d/%Y %I:%M%p')
-            end_datetime = datetime.datetime.strptime(end_datetime_str, '%m/%d/%Y %I:%M%p')
+        start_datetime = datetime.datetime.strptime(start_datetime_str, '%B %d, %Y %I:%M %p')
+        end_datetime = datetime.datetime.strptime(end_datetime_str, '%B %d, %Y %I:%M %p')
 
-            e = Event()
-            e.name = "Work Shift"
-            e.begin = start_datetime
-            e.end = end_datetime
-            e.description = "Shift from {} to {}".format(start_time, end_time)
+        e = Event()
+        e.name = event_name
+        e.begin = start_datetime
+        e.end = end_datetime
+        e.description = "Event from {} to {}".format(start_time, end_time)
 
             cal.events.add(e)
 
