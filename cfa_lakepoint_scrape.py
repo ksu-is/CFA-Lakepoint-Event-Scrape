@@ -59,7 +59,7 @@ def parse_events(events_scraped):
 
             # Add to list formatted for Google Calendar API
             cal_list.append({
-                'summary': event_name,,
+                'summary': event_name,
                 'start': {
                     'dateTime': start_datetime.isoformat(),
                     'timeZone': 'America/New_York',
@@ -91,7 +91,6 @@ def add_to_google_calendar(google_cal, cal_id):
         
         except Exception as error:
             print(f'Error: ', error)
-
 
 if __name__ == '__main__':
     main()
