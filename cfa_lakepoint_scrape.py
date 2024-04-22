@@ -4,9 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-
 import credentials
-
 
 def main():
     try:
@@ -17,30 +15,24 @@ def main():
     except Exception as error:
         print('Error: ', error)
 
-
 def scrape_events():
     lakepoint_url = ('https://lakepointsports.com/calendar/')
     headers = {'User-Agent': 'Mozilla/5.0'}
-   
     
-    with requests.session() as s:
+    with requests.session() as s: 
         try:
-            s.post(login_url, headers = headers, data = payload)
-            r = s.get(secure_url)
-            soup = BeautifulSoup(r.content, 'lxml')
+            r = s.get(lakepoint_url, headers=headers)
+            soup = BeautifulSoup(r.content, 'html.parser')
+            events_scraped = soup.find_all('div', class_='event')
+            google_cal = parse_events(events_scraped)
 
-        except:
-            print('Error: Please try again')
+        except Exception as error:
+            print('Error: Please try again', error)
+            google_cal = []
 
-    soup = BeautifulSoup(r.text, 'lxml')
-    shifts_scraped = soup.findAll('tr', id=lambda x: x and x.startswith('sftList_ctl'))
-
-    # Parse shift data into a list of dictionaries formatted for the Google Calendar API and create ICS file containing those shifts
-    google_cal = parse_shifts(shifts_scraped)
     return google_cal
 
-
-def parse_shifts(shifts_scraped):
+def parse_events(events_scraped):
     # Create a calendar
     cal = Calendar()
     # Initialize empty list for google calendar API
