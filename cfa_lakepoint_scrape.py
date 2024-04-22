@@ -10,24 +10,18 @@ import credentials
 
 def main():
     try:
-        google_cal = scrape_shifts()
+        google_cal = scrape_events()
         add_to_google_calendar(google_cal, credentials.calendar)
-        print('Your shifts for the month have been added to your Google Calendar!')
+        print('Lakepoint Sports events have been added to your Google Calendar!')
 
     except Exception as error:
         print('Error: ', error)
 
 
-def scrape_shifts():
-    login_url = ('https://v2can.schedulesource.com/teamwork/logon/chkLogon.aspx')
-    secure_url = ('https://v2can.schedulesource.com/teamwork/Employee/sch/schedule.aspx?view=month&layout=list')
+def scrape_events():
+    lakepoint_url = ('https://lakepointsports.com/calendar/')
     headers = {'User-Agent': 'Mozilla/5.0'}
-    payload = {
-        'portal': credentials.portal,
-        'code': credentials.code,
-        'user': credentials.username,
-        'pswd': credentials.password
-    }
+   
     
     with requests.session() as s:
         try:
