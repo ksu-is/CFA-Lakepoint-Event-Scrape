@@ -75,8 +75,8 @@ def parse_events(events_scraped):
     return cal_list
 
 
-def add_to_google_calendar(google_cal, cal_id):  
-    client_secrets = 'credentials.json'
+def add_to_google_calendar(google_cal, cal_id):
+    client_secrets = 'credentials.json' 
     scopes = ['https://www.googleapis.com/auth/calendar']
 
     # Initializing Google Calendar API service
@@ -88,7 +88,6 @@ def add_to_google_calendar(google_cal, cal_id):
 
         try:
                 service.events().insert(calendarId=cal_id, body=event).execute()
-        
         except Exception as error:
             print(f'Error: ', error)
 
