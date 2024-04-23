@@ -1,4 +1,11 @@
 - [x] Create README file.
-- [ ] Analyze similar repositories. Pick best match. 
-- [ ] Test repository. 
-- [ ] Fix any problem with repository.
+- [x] Analyze similar repositories. Pick best match. 
+- [x] Test repository. 
+- [x] Fix any problem with repository.
+- [x] Install necessary modules for code.
+- [x] Alter code to satisfy the scope.
+- [x] Make any necessary changes to code.
+- [x] Create credentials files.
+- [x] Find and save Google API credentilas.json file.
+- [x] Trial run code. See hwo it's working.
+- [ ] Make adjustments where needed. 
