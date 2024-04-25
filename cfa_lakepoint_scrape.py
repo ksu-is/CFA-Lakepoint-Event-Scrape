@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-import credentials
+import credentials_1
 
 def main():
     try:
@@ -87,7 +87,7 @@ def add_to_google_calendar(google_cal, cal_id):
     service = build('calendar', 'v3', credentials=creds)
 
     # Get the calendar ID from credentials.py
-    cal_id = credentials.calendar  
+    cal_id = credentials_1.calendar  
 
     for event in google_cal:
 
