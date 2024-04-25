@@ -4,12 +4,20 @@ import requests
 from bs4 import BeautifulSoup
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+<<<<<<< HEAD
+import credentials_1
+=======
 import credentials
+>>>>>>> parent of 4a0cbca (updates to cfa_lakepoint_scrape.py)
 
 def main():
     try:
         google_cal = scrape_events()
+<<<<<<< HEAD
+        add_to_google_calendar(google_cal, credentials_1.calendar)
+=======
         add_to_google_calendar(google_cal, credentials.calendar)
+>>>>>>> parent of 4a0cbca (updates to cfa_lakepoint_scrape.py)
         print('Lakepoint Sports events have been added to your Google Calendar!')
 
     except Exception as error:
@@ -79,11 +87,21 @@ def add_to_google_calendar(google_cal, cal_id):
     client_secrets = 'credentials.json' 
     scopes = ['https://www.googleapis.com/auth/calendar']
 
+<<<<<<< HEAD
+    flow = InstalledAppFlow.from_client_secrets_file('credentials.json', scopes)
+    creds = flow.run_local_server(port=0)
+    service = build('calendar', 'v3', credentials=creds)
+
+    # Get the calendar ID from credentials.py
+    cal_id = credentials_1.calendar  
+
+=======
     # Initializing Google Calendar API service
     flow = InstalledAppFlow.from_client_secrets_file(client_secrets, scopes)
     creds = flow.run_local_server(port=0)
     service = build('calendar', 'v3', credentials=creds)
 
+>>>>>>> parent of 4a0cbca (updates to cfa_lakepoint_scrape.py)
     for event in google_cal:
 
         try:
