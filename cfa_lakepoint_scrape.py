@@ -4,13 +4,13 @@ import requests
 from bs4 import BeautifulSoup
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-import calendar
+import credentials
 
 def main():
     try:
         google_cal = scrape_events()
 
-        add_to_google_calendar(google_cal, calendar.calendar)
+        add_to_google_calendar(google_cal, credentials.calendar)
 
         print('Lakepoint Sports events have been added to your Google Calendar!')
 
@@ -18,12 +18,12 @@ def main():
         print('Error: ', error)
 
 def scrape_events():
-    lakepoint_url = ('https://lakepointsports.com/calendar/')
+    url = ('https://lakepointsports.com/calendar/')
     headers = {'User-Agent': 'Mozilla/5.0'}
     
     with requests.session() as s: 
         try:
-            r = s.get(lakepoint_url, headers=headers)
+            r = s.get(url, headers=headers)
             soup = BeautifulSoup(r.content, 'html.parser')
             events_scraped = soup.find_all('div', class_='event')
             google_cal = parse_events(events_scraped)
@@ -87,7 +87,7 @@ def add_to_google_calendar(google_cal, cal_id):
     service = build('calendar', 'v3', credentials=creds)
 
     # Get the calendar ID from credentials.py
-    cal_id = calendar.calendar  
+    cal_id = credentials.calendar  
 
     for event in google_cal:
 
