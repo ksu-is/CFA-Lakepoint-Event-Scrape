@@ -10,7 +10,7 @@ def main():
     try:
         google_cal = scrape_events()
 
-        add_to_google_calendar(google_cal, credentials.calendar)
+        add_to_google_calendar(google_cal, credentials_1.calendar)
 
         print('Lakepoint Sports events have been added to your Google Calendar!')
 
