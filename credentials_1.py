@@ -1,1 +1,1 @@
-calendar = 'joshmadrigal502@gmail.com'
+calendar = "joshmadrigal502@gmail.com"
